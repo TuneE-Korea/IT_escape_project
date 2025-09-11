@@ -1,7 +1,11 @@
+import Notices from "@/Notice";
+import SliderBanner from "@/SliderBanner";
+
 export default function Home() {
   return (
-    <div className="">
-      <Header></Header>
-    </div>
+    <>
+      <SliderBanner />
+      <Notices />
+    </>
   );
 }
