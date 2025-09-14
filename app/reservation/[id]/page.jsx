@@ -1,15 +1,20 @@
 "use client";
 import { data } from "@/dummy/data";
 import { useParams, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const Page = () => {
+  // next의 router 컴포넌트
+  const router = useRouter;
   const searchParams = useSearchParams();
   const time = searchParams.get("time");
   const date = searchParams.get("date");
 
   // 2025/9/9
   const [newYear, newMonth, newDate] = date.split("/");
+  // 1~9월, 1~9일은 앞에 0을 붙여준다.
   const processedMonth =
     0 < +newMonth && +newMonth < 10 ? "0" + newMonth : newMonth;
   const processedDate = 0 < +newDate && +newDate < 10 ? "0" + newDate : newDate;
@@ -22,20 +27,68 @@ const Page = () => {
     setParticipants((prev) => e.target.value);
   };
 
+  // 시간의 입력 형식이 맞지 않는 경우 체크
   const isNotTime = isNaN(+time.split(":")[0]);
+  // 예약 가능한 시간대는 8시부터 23시까지로 설정
   const isNotOperationTime = !(
     7 < +time.split(":")[0] && +time.split(":")[0] <= 23
   );
-
+  // DATE 객체 활용! new Date().toISOString() 이걸 쓰면 '2025-09-14T12:08:48.687Z' 같은 양식으로 반환해줌.
   const [nowTime] = new Date().toISOString().split("T");
-  const [nowYear, nowMonth, nowDate] = nowTime.split("-");
+  // const [nowYear, nowMonth, nowDate] = nowTime.split("-");
+  // 다음 연도, 다음 월인 경우 아래와 같은 로직을 쓰면 안돼서 일단 주석처리.
   // const isFutrue = +nowYear <= newYear && +nowMonth <= newMonth && +nowDate <= newDate;
+
   if (isNotTime || isNotOperationTime)
     return <div>⛔ 잘못된 예약 요청입니다.</div>;
 
+  // [중요!] State로 다른 컴포넌트의 입력값 가지고 오기
+  const [name, setName] = useState("");
+  const nameChange = (e) => {
+    setName((prev) => e.target.value);
+  };
+  const [phone, setPhone] = useState("");
+  const phoneChange = (e) => {
+    setPhone((prev) => e.target.value);
+  };
+  const [isInputBlank, setIsInputBlank] = useState("");
+  const send = () => {
+    setIsInputBlank((prev) => {
+      if (name == "" || phone == "")
+        console.log("name이나 phone이 비어 있습니다.");
+      else {
+        const data = {
+          id,
+          title,
+          date: newYear + "-" + processedMonth + "-" + processedDate,
+          time,
+          name,
+          phone,
+          participants,
+          price: participants * 25000,
+        };
+        // 프론트 -> 백으로 보내는 법 ; fetch
+        fetch("http://localhost:3001/reserve", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((v) => v.json())
+          .then((v) => {
+            if (v.msg != "Created") {
+              alert("안 만들어짐");
+            } else {
+              alert("예약되었습니다.");
+              router.back;
+            }
+          });
+      }
+    });
+  };
+
   return (
     <section>
-      <div className="container mx-auto py-10 flex flex-col gap-10">
+      <div className="container mx-auto px-5 py-10 flex flex-col gap-10">
         <div className="flex gap-10">
           <label className="font-bold" htmlFor="">
             테마명
@@ -52,6 +105,7 @@ const Page = () => {
             예약날짜
           </label>
           <input
+            onChange={(e) => setDays()}
             disabled
             value={newYear + "-" + processedMonth + "-" + processedDate}
             className="border border-slate-500"
@@ -73,13 +127,18 @@ const Page = () => {
           <label className="font-bold" htmlFor="">
             예약자
           </label>
-          <input className="border border-slate-500" type="text" />
+          <input
+            onChange={nameChange}
+            className="border border-slate-500"
+            type="text"
+          />
         </div>
         <div className="flex gap-10">
           <label className="font-bold" htmlFor="">
             연락처
           </label>
           <input
+            onChange={phoneChange}
             placeholder="01012341234"
             className="border border-slate-500"
             type="tel"
@@ -101,8 +160,14 @@ const Page = () => {
           <label className="font-bold" htmlFor="">
             결제 금액
           </label>
-          <span>{+participants * 25000}</span>
+          <span>{`${participants * 25000}원`}</span>
         </div>
+        <button
+          onClick={send}
+          className="bg-amber-200 w-fit border-0 rounded-md p-3"
+        >
+          결제하기
+        </button>
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 "use client";
-import { data } from "@/src/dummy/data";
-import Reservation from "@/src/Reservation";
+import { data } from "@/dummy/data";
+import Reservation from "@/Reservation";
 import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";

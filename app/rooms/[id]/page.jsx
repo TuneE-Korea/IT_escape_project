@@ -1,6 +1,6 @@
 "use client";
 
-import { data } from "@/src/dummy/data";
+import { data } from "@/dummy/data";
 import { Key } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -13,7 +13,7 @@ const Page = () => {
       <div className="container w-full h-full mx-auto flex gap-20">
         <picture className="relative w-full h-full p-20 flex-1">
           <Image
-            className="object-cover"
+            className="object-cover rounded-md"
             src={result.image}
             alt={""}
             fill
@@ -21,17 +21,20 @@ const Page = () => {
           />
         </picture>
 
-        <div className="flex-1 flex flex-col gap-10">
-          <h2 className="text-5xl font-bold text-white">제목:{result.title}</h2>
+        <div className="flex-1 flex flex-col gap-8">
+          <h2 className="text-5xl font-bold text-white">{result.title}</h2>
           <span className="flex gap-1 text-lg text-white">
-            난이도:
+            Level:
             {Array(result.keys)
               .fill(0)
               .map((v, i) => (
                 <Key key={i} />
               ))}
           </span>
-          <p className="text-md text-white">상세 내용: {result.detail}</p>
+          <p className="text-md text-white">
+            방 설명: <br />
+            {result.detail}
+          </p>
         </div>
       </div>
     </section>

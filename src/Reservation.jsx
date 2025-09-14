@@ -16,7 +16,7 @@ const Reservation = (props) => {
           alt={""}
           priority
           fill
-          className="object-cover"
+          className="object-cover rounded-md"
         />
       </picture>
       <div className="flex flex-3 flex-col gap-10">

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="border-b">
+    <header>
       <nav className="container mx-auto py-5 flex justify-between items-center">
         <Link href={"/"}>IT_ESCAPE</Link>
         <Menu className="md:hidden" />

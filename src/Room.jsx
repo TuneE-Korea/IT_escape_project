@@ -4,10 +4,10 @@ import Link from "next/link";
 
 const Room = (props) => {
   return (
-    <article className="bg-slate-700 p-8 flex flex-col items-center">
+    <article className="bg-slate-700 p-8 flex flex-col gap-3 items-center rounded-xl">
       <div className="relative w-[400px] h-[600px]">
         <Image
-          className="object-cover"
+          className="object-cover rounded-md"
           fill
           priority
           src={props.image}

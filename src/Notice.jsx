@@ -3,9 +3,9 @@ import { CameraOff, MessageSquareOff, Skull, TimerOff } from "lucide-react";
 const Notices = () => {
   return (
     <section>
-      <div className="container mx-auto py-40 flex flex-col items-center ">
-        <h3 className="text-3xl text-center font-bold">NOTICE</h3>
-        <span className="text-md text-center mb-40">주의사항</span>
+      <div className="container mx-auto py-40 flex flex-col items-center justify-center">
+        <h3 className="text-5xl text-center font-bold">NOTICE</h3>
+        <span className="text-xl text-center mb-30">주의사항</span>
         <div className="flex justify-between gap-10">
           <article className="flex flex-col items-center">
             <TimerOff size={100} />
@@ -25,10 +25,7 @@ const Notices = () => {
           <article className="flex flex-col items-center">
             <Skull size={100} />
             <h5>위험물품 반입금지</h5>
-            <p>
-              고객의 안전을 위해서 cctv,인터폰,무전기가 있으니, 위험물품은
-              금지합니다.
-            </p>
+            <p>고객의 안전을 위해서 위험물품은 금지합니다.</p>
           </article>
         </div>
       </div>
