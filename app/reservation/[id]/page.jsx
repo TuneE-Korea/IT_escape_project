@@ -1,13 +1,13 @@
 "use client";
 import { data } from "@/dummy/data";
-import { useParams, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+// next 14버전 이후부터는 app 라우터 사용시 useRouter를 /router에서 import 하는 것이 아니라 /navigation에서 해야한다!
+// 아니면 mount 에러남.
+import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { useEffect } from "react";
 
 const Page = () => {
   // next의 router 컴포넌트
-  const router = useRouter;
+  const router = useRouter();
   const searchParams = useSearchParams();
   const time = searchParams.get("time");
   const date = searchParams.get("date");
@@ -45,7 +45,6 @@ const Page = () => {
   // [중요!] State로 다른 컴포넌트의 입력값 가지고 오기
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-
   const valueChange = (e, targetName) => {
     if (targetName == "name") {
       setName((prev) => e.target.value);
@@ -53,41 +52,36 @@ const Page = () => {
       setPhone((prev) => e.target.value);
     }
   };
-
-  const [isInputBlank, setIsInputBlank] = useState("");
   const send = () => {
-    setIsInputBlank((prev) => {
-      if (name == "" || phone == "") {
-        console.log("name이나 phone이 비어 있습니다.");
-        console.log(`name: ${name}, phone: ${phone}`);
-      } else {
-        const data = {
-          id,
-          title,
-          date: newYear + "-" + processedMonth + "-" + processedDate,
-          time,
-          name,
-          phone,
-          participants,
-          price: participants * 25000,
-        };
-        // 프론트 -> 백으로 보내는 법 ; fetch
-        fetch("http://localhost:3001/reserve", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        })
-          .then((v) => v.json())
-          .then((v) => {
-            if (v.msg != "Created") {
-              alert("안 만들어짐");
-            } else {
-              alert("예약되었습니다.");
-              router.back;
-            }
-          });
-      }
-    });
+    if (name == "" || phone == "") {
+      console.log("name이나 phone이 비어 있습니다.");
+    } else {
+      const data = {
+        id,
+        title,
+        date: newYear + "-" + processedMonth + "-" + processedDate,
+        time,
+        name,
+        phone,
+        participants,
+        price: participants * 25000,
+      };
+      // 프론트 -> 백으로 보내는 법 ; fetch
+      fetch("http://localhost:3001/reserve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((v) => v.json())
+        .then((v) => {
+          if (v.msg != "Created") {
+            alert("안 만들어짐");
+          } else {
+            alert("예약되었습니다.");
+            router.back();
+          }
+        });
+    }
   };
 
   return (
