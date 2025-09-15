@@ -31,6 +31,22 @@ const SliderBanner = () => {
             alt={""}
           />
         </SwiperSlide>
+        <SwiperSlide className="h-full">
+          <Image
+            className="object-cover"
+            src={"/images/fourth.jpg"}
+            fill
+            alt={""}
+          />
+        </SwiperSlide>
+        <SwiperSlide className="h-full">
+          <Image
+            className="object-cover"
+            src={"/images/fifth.jpg"}
+            fill
+            alt={""}
+          />
+        </SwiperSlide>
       </Swiper>
     </section>
   );
