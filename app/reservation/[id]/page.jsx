@@ -23,7 +23,7 @@ const Page = () => {
   const { title } = data.find((v) => v.id == +id);
 
   const [participants, setParticipants] = useState(2);
-  const change = (e) => {
+  const membersChange = (e) => {
     setParticipants((prev) => e.target.value);
   };
 
@@ -44,19 +44,23 @@ const Page = () => {
 
   // [중요!] State로 다른 컴포넌트의 입력값 가지고 오기
   const [name, setName] = useState("");
-  const nameChange = (e) => {
-    setName((prev) => e.target.value);
-  };
   const [phone, setPhone] = useState("");
-  const phoneChange = (e) => {
-    setPhone((prev) => e.target.value);
+
+  const valueChange = (e, targetName) => {
+    if (targetName == "name") {
+      setName((prev) => e.target.value);
+    } else if (targetName == "phone") {
+      setPhone((prev) => e.target.value);
+    }
   };
+
   const [isInputBlank, setIsInputBlank] = useState("");
   const send = () => {
     setIsInputBlank((prev) => {
-      if (name == "" || phone == "")
+      if (name == "" || phone == "") {
         console.log("name이나 phone이 비어 있습니다.");
-      else {
+        console.log(`name: ${name}, phone: ${phone}`);
+      } else {
         const data = {
           id,
           title,
@@ -105,7 +109,6 @@ const Page = () => {
             예약날짜
           </label>
           <input
-            onChange={(e) => setDays()}
             disabled
             value={newYear + "-" + processedMonth + "-" + processedDate}
             className="border border-slate-500"
@@ -128,7 +131,7 @@ const Page = () => {
             예약자
           </label>
           <input
-            onChange={nameChange}
+            onChange={(e) => valueChange(e, "name")}
             className="border border-slate-500"
             type="text"
           />
@@ -138,7 +141,7 @@ const Page = () => {
             연락처
           </label>
           <input
-            onChange={phoneChange}
+            onChange={(e) => valueChange(e, "phone")}
             placeholder="01012341234"
             className="border border-slate-500"
             type="tel"
@@ -148,7 +151,7 @@ const Page = () => {
           <label className="font-bold" htmlFor="">
             인원
           </label>
-          <select className="border" onChange={change}>
+          <select className="border" onChange={membersChange}>
             <option value="2">2명</option>
             <option value="3">3명</option>
             <option value="4">4명</option>
