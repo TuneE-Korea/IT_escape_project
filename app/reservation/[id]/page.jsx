@@ -54,7 +54,7 @@ const Page = () => {
   };
   const send = () => {
     if (name == "" || phone == "") {
-      console.log("name이나 phone이 비어 있습니다.");
+      alert("name이나 phone이 비어 있습니다! 채워주세요!");
     } else {
       const data = {
         id,

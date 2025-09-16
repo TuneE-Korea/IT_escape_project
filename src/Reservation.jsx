@@ -20,13 +20,13 @@ const Reservation = (props) => {
         />
       </picture>
       <div className="flex flex-3 flex-col gap-10">
-        <strong>{props.title}</strong>
-        <span className="flex gap-1">
-          난이도:{" "}
+        <strong className="text-white text-2xl">{props.title}</strong>
+        <span className="flex items-center gap-1 text-white">
+          <span>난이도: </span>
           {Array(props.keys)
             .fill(0)
             .map((v, i) => (
-              <Key key={i} />
+              <Key key={i} color="white" />
             ))}
         </span>
         <div className="grid grid-cols-3 gap-10">
