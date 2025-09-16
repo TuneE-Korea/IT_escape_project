@@ -7,7 +7,7 @@ const Notices = () => {
       <div className="container mx-auto my-40 flex flex-col items-center justify-center">
         <AnimatePresence>
           <motion.div
-            className="bg-amber-300 p-5 mb-20 flex flex-col items-center"
+            className="bg-amber-300 p-5 mb-20 gap-3 flex flex-col items-center"
             initial={{ opacity: 0 }}
             whileInView={{
               opacity: 1,
@@ -20,7 +20,7 @@ const Notices = () => {
             // onViewportEnter={(entry) => console.log(entry.isIntersecting)}
           >
             <h3 className="text-5xl text-center font-bold ">NOTICE</h3>
-            <span className="text-xl text-center ">주의사항</span>
+            <span className="text-xl text-center">🙏주의사항🙏</span>
           </motion.div>
         </AnimatePresence>
 

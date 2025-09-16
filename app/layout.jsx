@@ -2,7 +2,8 @@ import "./globals.css";
 import Header from "@/Header";
 import localFont from "next/font/local";
 
-const yourFont = localFont({
+// 사용할 로컬 폰트 이름 설정
+const vitroInspire = localFont({
   src: "../public/fonts/vitroInspire.otf", // 폰트 파일 경로
   display: "swap",
   variable: "--font-your-font", // CSS 변수 이름 설정
@@ -15,7 +16,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`bg-[#3C465C] ${yourFont.variable}`}>
+    <html lang="en" className={`bg-[#3C465C] ${vitroInspire.className}`}>
       <body>
         <div className="bg-[#D9D9D9] px-10 border-b">
           <Header />
