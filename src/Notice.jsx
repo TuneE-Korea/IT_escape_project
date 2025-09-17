@@ -30,7 +30,7 @@ const Notices = () => {
               opacity: 1,
               scale: [1, 1.1, 1.2, 1.1, 1],
               rotate: [0, -5, 5, -5, 0],
-              borderRadius: ["0%", "25%", "50%", "25%", "10%"],
+              borderRadius: ["0%", "25%", "50%", "25%", "20%"],
             }}
             // 처음 뷰포트에 들어왔을 때만 실행!
             viewport={{ once: true }}

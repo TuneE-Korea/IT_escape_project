@@ -16,7 +16,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`bg-[#3C465C] ${vitroInspire.className}`}>
+    <html lang="en" className={`bg-[#3C465C] ${vitroInspire.variable}`}>
       <body>
         <div className="bg-[#D9D9D9] px-10 border-b">
           <Header />
