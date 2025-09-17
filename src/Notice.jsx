@@ -1,22 +1,40 @@
 "use client";
 import { CameraOff, MessageSquareOff, Skull, TimerOff } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, easeInOut, easeOut } from "framer-motion";
 const Notices = () => {
+  const NoticeVar = {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: 0.3 },
+    },
+  };
+  const NoticeItemVar = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.2, ease: easeOut },
+    },
+  };
   return (
     <section>
       <div className="container mx-auto my-40 flex flex-col items-center justify-center">
         <AnimatePresence>
           <motion.div
             className="bg-amber-300 p-5 mb-20 gap-3 flex flex-col items-center"
-            initial={{ opacity: 0 }}
+            variants={NoticeVar}
             whileInView={{
               opacity: 1,
               scale: [1, 1.1, 1.2, 1.1, 1],
               rotate: [0, -5, 5, -5, 0],
               borderRadius: ["0%", "25%", "50%", "25%", "10%"],
             }}
+            // 처음 뷰포트에 들어왔을 때만 실행!
             viewport={{ once: true }}
-            // viewport 체크
+            // viewport에 들어오는지 체크하는 법
             // onViewportEnter={(entry) => console.log(entry.isIntersecting)}
           >
             <h3 className="text-5xl text-center font-bold ">NOTICE</h3>
@@ -24,8 +42,16 @@ const Notices = () => {
           </motion.div>
         </AnimatePresence>
 
-        <div className="flex justify-between gap-10">
+        <motion.div
+          className="flex justify-between gap-10"
+          variants={NoticeVar}
+          initial="hidden"
+          whileInView={"visible"}
+          // 처음 뷰포트에 들어왔을 때만 실행!
+          viewport={{ once: true }}
+        >
           <motion.article
+            variants={NoticeItemVar}
             className="flex flex-col items-center"
             whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
           >
@@ -35,6 +61,7 @@ const Notices = () => {
           </motion.article>
 
           <motion.article
+            variants={NoticeItemVar}
             className="flex flex-col items-center"
             whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
           >
@@ -45,6 +72,7 @@ const Notices = () => {
             </p>
           </motion.article>
           <motion.article
+            variants={NoticeItemVar}
             className="flex flex-col items-center"
             whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
           >
@@ -55,6 +83,7 @@ const Notices = () => {
             </p>
           </motion.article>
           <motion.article
+            variants={NoticeItemVar}
             className="flex flex-col items-center"
             whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
           >
@@ -64,7 +93,7 @@ const Notices = () => {
               고객의 안전을 위해서 위험물품은 금지합니다.
             </p>
           </motion.article>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
