@@ -54,7 +54,7 @@ const Page = () => {
   };
   const send = () => {
     if (name == "" || phone == "") {
-      alert("name이나 phone이 비어 있습니다! 채워주세요!");
+      alert("예약자 또는 연락처 입력란이 비어있습니다. 채워주세요!");
     } else {
       const data = {
         id,
