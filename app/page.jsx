@@ -6,6 +6,7 @@ export default function Home() {
     <>
       <SliderBanner />
       <Notices />
+      {/* 테스트! */}
     </>
   );
 }
